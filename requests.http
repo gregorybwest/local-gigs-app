@@ -1,0 +1,90 @@
+@domain = http://localhost:3000
+@jwt = eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2LCJleHAiOjE2NDYxMDI5OTV9.jOusXkiATNzj5sKAlMbZMnemeznurgUAffT0hmNKDyk
+
+### Users Index
+
+GET {{ domain }}/users
+
+### Users Create (signup)
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "romeo@gmail.com",
+  "user_name": "Romeo",
+  "image_url": "https://www.akc.org/wp-content/uploads/2017/11/German-Shepherd-on-White-00.jpg",
+  "is_artist": "yes",
+  "spotify_link": "https://open.spotify.com/artist/2QoU3awHVdcHS8LrZEKvSM?si=8T6cCeE7QICB7Pu0LGr9zw",
+  "location": "Chicago",
+  "bio": "I like walks and concerts!",
+  "password": "password",
+  "password_confirmation": "password"
+}
+
+### Users Show
+
+GET {{ domain }}/users/5
+
+### Users Update
+
+PATCH {{ domain }}/users/10
+Content-Type: application/json
+
+{
+  "bio": "Woof! I like walks and concerts!"
+}
+
+
+### Users Destroy
+DELETE {{ domain }}/users/4
+
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+### Sessions create (login)
+POST {{ domain }}/sessions
+Content-Type: application/json
+
+{
+  "email": "gregorybwest@gmail.com",
+  "password": "password"
+}
+
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+### Events Index
+
+GET {{ domain }}/events
+
+### Events Create
+
+POST {{ domain }}/events
+Content-Type: application/json
+Authorization: Bearer {{ jwt }}
+
+{
+  "yelp_venue_id": "qJ_iOBrjxU-unMbqRSBv9w",
+  "show_time": "2022-04-15T10:30:00-06:00",
+  "flier_image_url": "https://i.ebayimg.com/images/g/KIoAAOSw5ixg37XN/s-l300.jpg", 
+  "user_id": 5
+}
+
+### Events Show
+
+GET {{ domain }}/events/9
+
+### Events Update
+
+PATCH {{ domain }}/events/9
+Content-Type: application/json
+Authorization: Bearer {{ jwt }}
+
+{
+  "show_time": "2022-03-12T10:00:00-08:00"
+}
+
+
+### Events Destroy
+
+DELETE {{ domain }}/events/10
