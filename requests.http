@@ -1,5 +1,5 @@
 @domain = http://localhost:3000
-@jwt = eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2LCJleHAiOjE2NDYxMDI5OTV9.jOusXkiATNzj5sKAlMbZMnemeznurgUAffT0hmNKDyk
+@jwt = eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2LCJleHAiOjE2NDYxNzQxNDh9.nF0oFpSK-8hOAl2rlFXZeAUM0LJC4iSo3daeNwbYMtI
 
 ### Users Index
 
@@ -11,8 +11,8 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "email": "romeo@gmail.com",
-  "user_name": "Romeo",
+  "email": "yo@gmail.com",
+  "user_name": "yo",
   "image_url": "https://www.akc.org/wp-content/uploads/2017/11/German-Shepherd-on-White-00.jpg",
   "is_artist": "yes",
   "spotify_link": "https://open.spotify.com/artist/2QoU3awHVdcHS8LrZEKvSM?si=8T6cCeE7QICB7Pu0LGr9zw",
@@ -32,12 +32,12 @@ PATCH {{ domain }}/users/10
 Content-Type: application/json
 
 {
-  "bio": "Woof! I like walks and concerts!"
+  "is_artist": "false"
 }
 
 
 ### Users Destroy
-DELETE {{ domain }}/users/4
+DELETE {{ domain }}/users/11
 
 ### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -87,4 +87,10 @@ Authorization: Bearer {{ jwt }}
 
 ### Events Destroy
 
-DELETE {{ domain }}/events/10
+DELETE {{ domain }}/events/13
+Authorization: Bearer {{ jwt }}
+
+
+### Venues Index
+
+GET http://localhost:3000/venues?location=chicago&categories=musicvenues,bars&term=chicagotheatre

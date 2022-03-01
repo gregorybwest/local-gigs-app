@@ -12,5 +12,7 @@ Rails.application.routes.draw do
   delete "/events/:id" => "events#destroy"
 
   post "/sessions" => "sessions#create"
+
+  get "/venues" => "venues#index"
   
 end
