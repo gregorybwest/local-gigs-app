@@ -1,5 +1,5 @@
 @domain = http://localhost:3000
-@jwt = eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2LCJleHAiOjE2NDYxNzQxNDh9.nF0oFpSK-8hOAl2rlFXZeAUM0LJC4iSo3daeNwbYMtI
+@jwt = eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1LCJleHAiOjE2NDYzNTk3NjB9.BYg8e0fN5XcjSfaI6i_TztGrCrtZ5QStOrIMsFbkGko
 
 ### Users Index
 
@@ -39,18 +39,18 @@ Content-Type: application/json
 ### Users Destroy
 DELETE {{ domain }}/users/11
 
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ### Sessions create (login)
 POST {{ domain }}/sessions
 Content-Type: application/json
 
 {
-  "email": "gregorybwest@gmail.com",
+  "email": "wilco@gmail.com",
   "password": "password"
 }
 
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 ### Events Index
@@ -66,8 +66,7 @@ Authorization: Bearer {{ jwt }}
 {
   "yelp_venue_id": "qJ_iOBrjxU-unMbqRSBv9w",
   "show_time": "2022-04-15T10:30:00-06:00",
-  "flier_image_url": "https://i.ebayimg.com/images/g/KIoAAOSw5ixg37XN/s-l300.jpg", 
-  "user_id": 5
+  "flier_image_url": "https://i.ebayimg.com/images/g/KIoAAOSw5ixg37XN/s-l300.jpg" 
 }
 
 ### Events Show
@@ -76,21 +75,27 @@ GET {{ domain }}/events/9
 
 ### Events Update
 
-PATCH {{ domain }}/events/9
+PATCH {{ domain }}/events/13
 Content-Type: application/json
 Authorization: Bearer {{ jwt }}
 
 {
-  "show_time": "2022-03-12T10:00:00-08:00"
+  "show_time": "2022-04-14T10:00:00-08:00"
 }
 
 
 ### Events Destroy
 
-DELETE {{ domain }}/events/13
+DELETE {{ domain }}/events/15
 Authorization: Bearer {{ jwt }}
 
 
 ### Venues Index
 
-GET http://localhost:3000/venues?location=chicago&categories=musicvenues,bars&term=chicagotheatre
+GET {{ domain }}/venues?location=chicago&categories=musicvenues,bars&term=chicagotheatre
+
+
+### Venue Search By Id
+
+GET https://api.yelp.com/v3/businesses/-5jlXpj4yQwh7fnCEVDvCA
+Authorization: Bearer KRF0Nx-osq5QPgEEY6i7kiHNSwIzhVD8zyGIiWQgekHXZOoc_5MExCDyjZaqY2kYz8r_ml68QR2b9ZbF04BCEIV02sX-ysFUkywL_-pHjD0HxPCPqSGrHYvlS-8fYnYx
