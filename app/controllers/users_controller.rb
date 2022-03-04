@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  
+  before_action :authenticate_user, except: [:index, :create, :show]
+
   def index
     users = User.all
     render json: users
@@ -38,6 +41,9 @@ class UsersController < ApplicationController
     user.spotify_link = params[:spotify_link] || user.spotify_link
     user.location = params[:location] || user.location
     user.bio = params[:bio] || user.bio
+    if user.id != current_user.id
+      return render json: {errors: user.errors.full_messages}, status: :unauthorized
+    end 
     if user.save
       render json: user
     else
@@ -47,6 +53,9 @@ class UsersController < ApplicationController
 
   def destroy
     user = User.find(params[:id])
+    if user.id != current_user.id
+      return render json: {errors: user.errors.full_messages}, status: :unauthorized
+    end 
     user.destroy
     render json: {message: "User successfully destroyed"}
   end
