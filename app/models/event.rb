@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   belongs_to :user
-  validates_presence_of :show_time
+  validates_presence_of :yelp_venue_id, :show_time
 
   def yelp_venue
     response = HTTP.auth("Bearer #{Rails.application.credentials.yelp_api_key}").get("https://api.yelp.com/v3/businesses/#{yelp_venue_id}")
