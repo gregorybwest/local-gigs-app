@@ -6,10 +6,12 @@ class Event < ApplicationRecord
     response = HTTP.auth("Bearer #{Rails.application.credentials.yelp_api_key}").get("https://api.yelp.com/v3/businesses/#{yelp_venue_id}")
     venue = response.parse(:json)
     return {
-      id: venue["id"],
+      # id: venue["id"], Do I need this?
       name: venue["name"],
       location: venue["location"]["display_address"],
       coordinates: venue["coordinates"]
     }
   end
+
+  scope :has_not_happened, -> { where('show_time > ?', DateTime.now) }
 end
