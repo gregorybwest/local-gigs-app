@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   
-  before_action :authenticate_user, except: [:index, :create, :show]
+  before_action :authenticate_user, only: [:update, :delete]
 
   def index
     users = User.all
