@@ -15,7 +15,7 @@ class EventsController < ApplicationController
       user_id: current_user.id
     )
     if event.save
-      render json: { message: "Event created successfully"}, status: :created
+      render json: event, status: :created
     else
       render json: { errors: event.errors.full_messages }, status: :unprocessable_entity
     end
@@ -43,10 +43,11 @@ class EventsController < ApplicationController
 
   def destroy
     event = Event.find(params[:id])
+    if event.user_id != current_user.id
+      return render json: {errors: event.errors.full_messages}, status: :unauthorized
+    end
     event.destroy
     render json: {message: "Event successfully destroyed"}
   end
-
-
 
 end
