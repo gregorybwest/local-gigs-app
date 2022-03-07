@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def index
     users = User.all
-    render json: users
+    render json: users, include: [] # This won't show users events in users index
   end
 
   def create
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       bio: params[:bio]
     )
     if user.save
-      render json: { message: "User created successfully"}, status: :created
+      render json: user, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :bad_request
     end
@@ -31,19 +31,16 @@ class UsersController < ApplicationController
     render json: user
   end
 
+  # should user be able to update email, password?
   def update
-    user = User.find(params[:id])
+    user = current_user
     user.email = params[:email] || user.email
-    user.password_digest = params[:password_digest] || user.password_digest
     user.user_name = params[:user_name] || user.user_name
     user.image_url = params[:image_url] || user.image_url
     user.is_artist = params[:is_artist] || user.is_artist
     user.spotify_link = params[:spotify_link] || user.spotify_link
     user.location = params[:location] || user.location
     user.bio = params[:bio] || user.bio
-    if user.id != current_user.id
-      return render json: {errors: user.errors.full_messages}, status: :unauthorized
-    end 
     if user.save
       render json: user
     else
@@ -52,10 +49,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = User.find(params[:id])
-    if user.id != current_user.id
-      return render json: {errors: user.errors.full_messages}, status: :unauthorized
-    end 
+    user = current_user
     user.destroy
     render json: {message: "User successfully destroyed"}
   end
