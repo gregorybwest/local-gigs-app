@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_action :authenticate_user, except: [:index, :show]
 
   def index
-    events = Event.all
+    events = Event.has_not_happened.order(:show_time)
     render json: events
   end
 
@@ -32,7 +32,7 @@ class EventsController < ApplicationController
     event.show_time = params[:show_time] || event.show_time
     event.flier_image_url = params[:flier_image_url] || event.flier_image_url
     if event.user_id != current_user.id
-      return render json: {errors: event.errors.full_messages}, status: :unauthorized
+      return render json: {}, status: :unauthorized
     end
     if event.save
       render json: event
@@ -44,7 +44,7 @@ class EventsController < ApplicationController
   def destroy
     event = Event.find(params[:id])
     if event.user_id != current_user.id
-      return render json: {errors: event.errors.full_messages}, status: :unauthorized
+      return render json: {}, status: :unauthorized
     end
     event.destroy
     render json: {message: "Event successfully destroyed"}
