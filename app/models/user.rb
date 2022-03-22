@@ -3,5 +3,5 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :user_name, presence: true, uniqueness: true
   validates :location, presence: true
-  has_many :events
+  has_many :events, dependent: :destroy
 end
